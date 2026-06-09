@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Santiago Carrillo — Filmmaker & Editor Audiovisual</title>
+  <meta name="description" content="Portfolio de Santiago Carrillo. Filmmaker, Editor de Video/Audio y Director Creativo con más de tres años de experiencia en producción audiovisual.">
+  <meta property="og:title" content="Santiago Carrillo — Filmmaker & Editor Audiovisual">
+  <meta property="og:description" content="Filmmaker, Editor de Video/Audio y Director Creativo especializado en Adobe Premiere y After Effects.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#080808">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #080808;
+      --surface:   #111111;
+      --surface2:  #1a1a1a;
+      --border:    #2a2a2a;
+      --accent:    #e63329;
+      --accent2:   #f5a623;
+      --text:      #efefef;
+      --muted:     #7a7a7a;
+      --font-head: 'Bebas Neue', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --font-body: 'Inter', sans-serif;
+      --nav-h:     64px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ─── FILM GRAIN OVERLAY ───────────────────────────────── */
+    .grain {
+      position: fixed; inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      animation: grainShift 0.15s steps(1) infinite;
+    }
+    @keyframes grainShift {
+      0%  { transform: translate(0,0); }
+      10% { transform: translate(-2%,-3%); }
+      20% { transform: translate(3%,1%); }
+      30% { transform: translate(-1%,4%); }
+      40% { transform: translate(4%,-2%); }
+      50% { transform: translate(-3%,3%); }
+      60% { transform: translate(2%,-4%); }
+      70% { transform: translate(-4%,2%); }
+      80% { transform: translate(3%,-1%); }
+      90% { transform: translate(-2%,4%); }
+     100% { transform: translate(1%,-3%); }
+    }
+
+    /* ─── SCROLLBAR ────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    /* ─── NAV ──────────────────────────────────────────────── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw;
+      z-index: 100;
+      transition: background .4s, backdrop-filter .4s;
+    }
+    .nav.scrolled {
+      background: rgba(8,8,8,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__logo {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      letter-spacing: .1em;
+      color: var(--text);
+    }
+    .nav__logo span { color: var(--accent); }
+    .nav__links {
+      display: flex; gap: 2.5rem;
+      list-style: none;
+    }
+    .nav__links a {
+      font-size: .8rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color .25s;
+      position: relative;
+    }
+    .nav__links a::after {
+      content: '';
+      position: absolute; left: 0; bottom: -4px;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width .3s;
+    }
+    .nav__links a:hover { color: var(--text); }
+    .nav__links a:hover::after { width: 100%; }
+    .nav__hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .nav__hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--text); transition: transform .3s, opacity .3s;
+    }
+    .nav__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav__mobile {
+      display: none;
+      position: fixed; inset: 0; top: var(--nav-h);
+      background: rgba(8,8,8,.97);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 3rem; z-index: 99;
+    }
+    .nav__mobile.open { display: flex; }
+    .nav__mobile a {
+      font-family: var(--font-head); font-size: 2.5rem;
+      letter-spacing: .1em; color: var(--muted); transition: color .25s;
+    }
+    .nav__mobile a:hover { color: var(--accent); }
+
+    /* ─── HERO ─────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding: 0 5vw;
+    }
+    /* Cinematic scanlines */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,.08) 2px,
+        rgba(0,0,0,.08) 4px
+      );
+      pointer-events: none; z-index: 1;
+    }
+    /* Radial vignette */
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center,
+        transparent 40%,
+        rgba(0,0,0,.85) 100%
+      );
+      pointer-events: none; z-index: 1;
+    }
+    .hero__bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(230,51,41,.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(245,166,35,.04) 0%, transparent 60%);
+      animation: bgPulse 8s ease-in-out infinite alternate;
+    }
+    @keyframes bgPulse {
+      from { opacity: .6; }
+      to   { opacity: 1; }
+    }
+    /* Film sprocket holes — top & bottom */
+    .hero__sprockets {
+      position: absolute; left: 0; right: 0;
+      pointer-events: none; z-index: 2;
+      display: flex; justify-content: space-around; align-items: center;
+      padding: 0 1rem;
+    }
+    .hero__sprockets--top  { top: 0; }
+    .hero__sprockets--bot  { bottom: 0; }
+    .sprocket-bar {
+      width: 100%; height: 28px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--surface) 0px, var(--surface) 14px,
+        transparent 14px, transparent 34px
+      );
+      opacity: .4;
+    }
+    .hero__content {
+      position: relative; z-index: 3;
+      max-width: 900px;
+    }
+    .hero__eyebrow {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; justify-content: center; gap: .8rem;
+    }
+    .hero__eyebrow::before, .hero__eyebrow::after {
+      content: ''; flex: 1; max-width: 60px;
+      height: 1px; background: var(--accent); opacity: .6;
+    }
+    .hero__name {
+      font-family: var(--font-head);
+      font-size: clamp(4rem, 12vw, 9rem);
+      line-height: .92;
+      letter-spacing: .04em;
+      color: var(--text);
+      position: relative;
+    }
+    .hero__name .glitch {
+      position: relative; display: inline-block;
+    }
+    .hero__name .glitch::before,
+    .hero__name .glitch::after {
+      content: attr(data-text);
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+    }
+    .hero__name .glitch::before {
+      color: var(--accent);
+      clip-path: polygon(0 0,100% 0,100% 35%,0 35%);
+      animation: glitch1 4s infinite linear;
+      opacity: .8;
+    }
+    .hero__name .glitch::after {
+      color: var(--accent2);
+      clip-path: polygon(0 65%,100% 65%,100% 100%,0 100%);
+      animation: glitch2 4s infinite linear;
+      opacity: .6;
+    }
+    @keyframes glitch1 {
+      0%,94%,100% { transform: none; opacity: 0; }
+      95% { transform: translate(-3px, 1px) skewX(-2deg); opacity: .8; }
+      97% { transform: translate(3px,-1px) skewX(2deg); opacity: .8; }
+      99% { transform: translate(-1px, 2px); opacity: .8; }
+    }
+    @keyframes glitch2 {
+      0%,94%,100% { transform: none; opacity: 0; }
+      96% { transform: translate(3px,-2px) skewX(3deg); opacity: .6; }
+      98% { transform: translate(-3px, 1px) skewX(-1deg); opacity: .6; }
+    }
+    .hero__subtitle {
+      font-family: var(--font-mono);
+      font-size: clamp(.9rem, 2.5vw, 1.15rem);
+      color: var(--muted);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-top: 1.2rem;
+      min-height: 1.5em;
+    }
+    .cursor {
+      display: inline-block;
+      width: .55em; height: 1em;
+      background: var(--accent);
+      margin-left: 2px;
+      animation: blink .9s step-end infinite;
+      vertical-align: text-bottom;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .hero__cta {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: .6rem;
+      padding: .85rem 2rem;
+      font-size: .8rem; letter-spacing: .14em; text-transform: uppercase;
+      font-family: var(--font-mono);
+      border: none; cursor: pointer;
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    }
+    .btn-primary:hover {
+      background: #ff4a40;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(230,51,41,.4);
+    }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .hero__scroll {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      color: var(--muted);
+      font-family: var(--font-mono); font-size: .65rem; letter-spacing: .2em;
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+    @keyframes scrollBounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(6px); }
+    }
+    .hero__scroll i { font-size: 1.2rem; color: var(--accent); }
+
+    /* ─── SECTION COMMON ───────────────────────────────────── */
+    section { padding: 7rem 5vw; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: .68rem; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--accent);
+      display: flex; align-items: center; gap: .8rem;
+      margin-bottom: .8rem;
+    }
+    .section-label::before {
+      content: ''; width: 32px; height: 1px; background: var(--accent);
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      letter-spacing: .05em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: .4rem;
+    }
+    .section-title span { color: var(--accent); }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* ─── SCROLL REVEAL ────────────────────────────────────── */
+    [data-reveal] {
+      opacity: 0;
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    [data-reveal="up"]    { transform: translateY(40px); }
+    [data-reveal="left"]  { transform: translateX(-40px); }
+    [data-reveal="right"] { transform: translateX(40px); }
+    [data-reveal="scale"] { transform: scale(.92); }
+    [data-reveal].visible { opacity: 1; transform: none; }
+    [data-reveal-delay="1"] { transition-delay: .1s; }
+    [data-reveal-delay="2"] { transition-delay: .2s; }
+    [data-reveal-delay="3"] { transition-delay: .3s; }
+    [data-reveal-delay="4"] { transition-delay: .4s; }
+    [data-reveal-delay="5"] { transition-delay: .5s; }
+
+    /* ─── ABOUT ────────────────────────────────────────────── */
+    .about__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      margin-top: 3rem;
+    }
+    .about__frame {
+      position: relative;
+    }
+    .about__frame-inner {
+      position: relative;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      background: var(--surface2);
+    }
+    /* Film frame decoration */
+    .about__frame-inner::before {
+      content: '';
+      position: absolute; inset: 0;
+      border: 2px solid var(--accent);
+      opacity: .25; z-index: 2;
+    }
+    .about__frame-inner::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 60%, rgba(230,51,41,.15) 100%);
+      z-index: 2;
+    }
+    .about__placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1.2rem; color: var(--muted);
+      background:
+        radial-gradient(ellipse at 30% 30%, rgba(230,51,41,.08) 0%, transparent 60%),
+        var(--surface2);
+    }
+    .about__placeholder i { font-size: 4rem; color: var(--accent); opacity: .4; }
+    .about__placeholder p { font-family: var(--font-mono); font-size: .65rem; letter-spacing: .2em; }
+    .about__frame-tag {
+      position: absolute; bottom: -1px; left: -1px;
+      background: var(--accent); color: #fff;
+      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .15em;
+      padding: .35rem .8rem;
+      z-index: 3;
+    }
+    .about__corner {
+      position: absolute; width: 20px; height: 20px;
+      border-color: var(--accent2); border-style: solid; opacity: .6;
+    }
+    .about__corner--tl { top: -10px; left: -10px; border-width: 2px 0 0 2px; }
+    .about__corner--tr { top: -10px; right: -10px; border-width: 2px 2px 0 0; }
+    .about__corner--bl { bottom: -10px; left: -10px; border-width: 0 0 2px 2px; }
+    .about__corner--br { bottom: -10px; right: -10px; border-width: 0 2px 2px 0; }
+    .about__text { }
+    .about__bio {
+      font-size: 1.05rem; color: #c8c8c8;
+      line-height: 1.8; margin-bottom: 2.5rem;
+    }
+    .about__stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-bottom: 2.5rem;
+    }
+    .stat {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      border: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      transition: border-color .3s;
+    }
+    .stat::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: var(--accent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .4s;
+    }
+    .stat:hover::before { transform: scaleX(1); }
+    .stat:hover { border-color: var(--accent); }
+    .stat__num {
+      font-family: var(--font-head); font-size: 2.8rem;
+      color: var(--accent); line-height: 1;
+    }
+    .stat__label {
+      font-size: .72rem; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted);
+      margin-top: .4rem;
+    }
+    .about__tools {
+      display: flex; flex-wrap: wrap; gap: .6rem;
+    }
+    .tool-tag {
+      font-family: var(--font-mono); font-size: .65rem;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .35rem .8rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      transition: border-color .2s, color .2s;
+    }
+    .tool-tag:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    /* ─── SKILLS ───────────────────────────────────────────── */
+    .skills { background: var(--surface); }
+    .skills__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem; margin-top: 3rem;
+    }
+    .skill-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: relative; overflow: hidden;
+      transition: border-color .3s, transform .3s;
+    }
+    .skill-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(230,51,41,.05) 0%, transparent 60%);
+      opacity: 0; transition: opacity .3s;
+    }
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .skill-card:hover::after { opacity: 1; }
+    .skill-card__icon {
+      font-size: 2rem; margin-bottom: 1.2rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .skill-card__title {
+      font-family: var(--font-head); font-size: 1.4rem;
+      letter-spacing: .05em; margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+    .skill-bar-item { margin-bottom: 1.2rem; }
+    .skill-bar-item:last-child { margin-bottom: 0; }
+    .skill-bar-header {
+      display: flex; justify-content: space-between;
+      margin-bottom: .5rem;
+      font-size: .78rem; color: var(--muted);
+      font-family: var(--font-mono);
+    }
+    .skill-bar-header span:last-child { color: var(--accent); }
+    /* VU meter style track */
+    .skill-track {
+      height: 8px;
+      background: var(--surface2);
+      position: relative; overflow: hidden;
+    }
+    .skill-track::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        90deg, transparent, transparent 3px, var(--bg) 3px, var(--bg) 4px
+      );
+      z-index: 1;
+    }
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 1.2s cubic-bezier(.25,.46,.45,.94);
+    }
+    .skill-fill.animate { transform: scaleX(1); }
+    /* Language tags */
+    .lang-grid { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: .5rem; }
+    .lang-badge {
+      padding: .4rem 1rem;
+      font-family: var(--font-mono); font-size: .7rem;
+      letter-spacing: .1em; text-transform: uppercase;
+      border: 1px solid var(--border); color: var(--text);
+      position: relative; overflow: hidden;
+    }
+    .lang-badge.native { border-color: var(--accent); color: var(--accent); }
+    .lang-badge.b2 { border-color: var(--accent2); color: var(--accent2); }
+
+    /* ─── EXPERIENCE (FILM STRIP TIMELINE) ─────────────────── */
+    .experience { }
+    .timeline {
+      position: relative; margin-top: 3.5rem;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: repeating-linear-gradient(
+        180deg,
+        var(--accent) 0px, var(--accent) 8px,
+        transparent 8px, transparent 16px
+      );
+    }
+    .timeline-item {
+      position: relative; margin-bottom: 3.5rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute; left: -2.35rem; top: .5rem;
+      width: 12px; height: 12px;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+      transform: rotate(45deg);
+      transition: background .3s;
+    }
+    .timeline-item:hover::before { background: var(--accent); }
+    .timeline-frame {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.8rem 2rem;
+      transition: border-color .3s, transform .3s;
+    }
+    .timeline-item:hover .timeline-frame {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+    /* Film strip sprocket strip on the side */
+    .timeline-frame::before {
+      content: '';
+      position: absolute; left: -2rem; top: 0; bottom: 0; width: 1rem;
+      background: repeating-linear-gradient(
+        180deg,
+        transparent 0px, transparent 6px,
+        rgba(230,51,41,.15) 6px, rgba(230,51,41,.15) 14px
+      );
+    }
+    .timeline-date {
+      font-family: var(--font-mono); font-size: .65rem;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: .6rem;
+    }
+    .timeline-role {
+      font-family: var(--font-head); font-size: 1.5rem;
+      letter-spacing: .04em; color: var(--text);
+      line-height: 1.1; margin-bottom: .3rem;
+    }
+    .timeline-company {
+      font-size: .82rem; color: var(--accent2);
+      font-family: var(--font-mono); letter-spacing: .1em;
+      margin-bottom: 1rem;
+    }
+    .timeline-desc {
+      font-size: .9rem; color: #ababab; line-height: 1.7;
+    }
+
+    /* ─── EDUCATION ────────────────────────────────────────── */
+    .education { background: var(--surface); }
+    .edu-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      margin-top: 3rem;
+      display: grid; grid-template-columns: auto 1fr;
+      gap: 2rem; align-items: start;
+      transition: border-color .3s;
+    }
+    .edu-card:hover { border-color: var(--accent); }
+    .edu-icon {
+      width: 64px; height: 64px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); font-size: 1.6rem;
+    }
+    .edu-degree {
+      font-family: var(--font-head); font-size: 1.6rem;
+      letter-spacing: .04em; color: var(--text); line-height: 1.1;
+    }
+    .edu-school {
+      font-size: .82rem; color: var(--accent2);
+      font-family: var(--font-mono); letter-spacing: .1em;
+      margin: .4rem 0 .8rem;
+    }
+    .edu-date {
+      font-family: var(--font-mono); font-size: .65rem;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
+    }
+    .edu-status {
+      display: inline-block; margin-left: 1rem;
+      padding: .2rem .7rem;
+      font-size: .6rem; letter-spacing: .15em;
+      text-transform: uppercase; font-family: var(--font-mono);
+      background: rgba(230,51,41,.1); border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+
+    /* ─── CONTACT ──────────────────────────────────────────── */
+    .contact__inner {
+      max-width: 700px; margin: 3rem auto 0;
+      text-align: center;
+    }
+    .contact__lead {
+      font-size: 1.05rem; color: #ababab; line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+    .contact__grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1rem; margin-bottom: 2.5rem;
+    }
+    .contact-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.2rem 1.5rem;
+      border: 1px solid var(--border);
+      text-align: left;
+      transition: border-color .3s, background .3s;
+    }
+    .contact-item:hover {
+      border-color: var(--accent);
+      background: rgba(230,51,41,.04);
+    }
+    .contact-item i {
+      font-size: 1.1rem; color: var(--accent);
+      flex-shrink: 0;
+    }
+    .contact-item__label {
+      font-family: var(--font-mono); font-size: .6rem;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: .2rem;
+    }
+    .contact-item__value {
+      font-size: .85rem; color: var(--text);
+    }
+    .socials {
+      display: flex; gap: 1rem; justify-content: center;
+      margin-top: 2rem;
+    }
+    .social-link {
+      width: 48px; height: 48px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--muted);
+      transition: border-color .25s, color .25s, transform .25s;
+    }
+    .social-link:hover {
+      border-color: var(--accent); color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    /* ─── FOOTER ───────────────────────────────────────────── */
+    footer {
+      text-align: center; padding: 2rem 5vw;
+      border-top: 1px solid var(--border);
+      font-family: var(--font-mono); font-size: .65rem;
+      letter-spacing: .15em; color: var(--muted);
+    }
+    footer span { color: var(--accent); }
+
+    /* ─── RESPONSIVE ───────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .about__grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about__frame { max-width: 340px; margin: 0 auto; }
+      .skills__grid { grid-template-columns: 1fr; }
+      .contact__grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .nav__links { display: none; }
+      .nav__hamburger { display: flex; }
+      .about__stats { grid-template-columns: repeat(3,1fr); gap: .8rem; }
+      .edu-card { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .about__stats { grid-template-columns: 1fr; }
+      section { padding: 4rem 5vw; }
+    }
+
+    /* ─── ANIMATED WAVEFORM DECORATION ────────────────────── */
+    .waveform {
+      display: flex; align-items: flex-end; gap: 3px;
+      height: 32px;
+      margin: 2rem auto 0;
+      justify-content: center;
+    }
+    .wave-bar {
+      width: 3px;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+      animation: wavePulse 1.2s ease-in-out infinite;
+      opacity: .6;
+    }
+    @keyframes wavePulse {
+      0%,100% { height: 4px; }
+      50%      { height: 100%; }
+    }
+
+    /* ─── REEL / LOADER LINE ───────────────────────────────── */
+    .progress-line {
+      position: fixed; top: 0; left: 0;
+      height: 2px; width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      z-index: 9998;
+      transition: width .1s linear;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Reading progress -->
+  <div class="progress-line" id="progress"></div>
+
+  <!-- Film grain -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ─── NAVIGATION ─────────────────────────────────────── -->
+  <header class="nav" id="nav">
+    <a href="#home" class="nav__logo">S.<span>C</span></a>
+    <ul class="nav__links">
+      <li><a href="#about">Acerca</a></li>
+      <li><a href="#skills">Habilidades</a></li>
+      <li><a href="#experience">Experiencia</a></li>
+      <li><a href="#education">Educación</a></li>
+      <li><a href="#contact">Contacto</a></li>
+    </ul>
+    <button class="nav__hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- Mobile nav -->
+  <nav class="nav__mobile" id="mobileNav">
+    <a href="#about"       onclick="closeMobile()">Acerca</a>
+    <a href="#skills"      onclick="closeMobile()">Habilidades</a>
+    <a href="#experience"  onclick="closeMobile()">Experiencia</a>
+    <a href="#education"   onclick="closeMobile()">Educación</a>
+    <a href="#contact"     onclick="closeMobile()">Contacto</a>
+  </nav>
+
+  <!-- ─── HERO ──────────────────────────────────────────────── -->
+  <section class="hero" id="home">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero__sprockets hero__sprockets--top" aria-hidden="true">
+      <div class="sprocket-bar"></div>
+    </div>
+    <div class="hero__sprockets hero__sprockets--bot" aria-hidden="true">
+      <div class="sprocket-bar"></div>
+    </div>
+
+    <div class="hero__content">
+      <p class="hero__eyebrow">Filmmaker &amp; Director Creativo</p>
+      <h1 class="hero__name">
+        <span class="glitch" data-text="SANTIAGO">SANTIAGO</span><br>
+        <span class="glitch" data-text="CARRILLO">CARRILLO</span>
+      </h1>
+      <p class="hero__subtitle" id="typewriter"><span class="cursor"></span></p>
+      <div class="hero__cta">
+        <a href="#experience" class="btn btn-primary">
+          <i class="fa-solid fa-film"></i> Ver trayectoria
+        </a>
+        <a href="mailto:scarrillo2003@gmail.com" class="btn btn-outline">
+          <i class="fa-solid fa-envelope"></i> Contactar
+        </a>
+      </div>
+
+      <!-- Animated waveform decoration -->
+      <div class="waveform" aria-hidden="true" id="waveform"></div>
+    </div>
+
+    <div class="hero__scroll" aria-hidden="true">
+      <i class="fa-solid fa-chevron-down"></i>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ─── ABOUT ─────────────────────────────────────────────── -->
+  <section class="about" id="about">
+    <div class="container">
+      <div data-reveal="up">
+        <p class="section-label">Acerca de mí</p>
+        <h2 class="section-title">Editor &amp; <span>Realizador</span></h2>
+      </div>
+
+      <div class="about__grid">
+        <!-- Photo frame -->
+        <div class="about__frame" data-reveal="left">
+          <div class="about__corner about__corner--tl"></div>
+          <div class="about__corner about__corner--tr"></div>
+          <div class="about__corner about__corner--bl"></div>
+          <div class="about__corner about__corner--br"></div>
+          <div class="about__frame-inner">
+            <div class="about__placeholder">
+              <i class="fa-solid fa-camera"></i>
+              <p>FOTO DE PERFIL</p>
+            </div>
+          </div>
+          <div class="about__frame-tag">FRAME 001 / TAKE 1</div>
+        </div>
+
+        <!-- Text -->
+        <div class="about__text" data-reveal="right">
+          <p class="about__bio">
+            Editor de video con más de tres años de experiencia en producción audiovisual,
+            especializado en <strong>Adobe Premiere Pro</strong> y con dominio de
+            <strong>After Effects</strong>. Con experiencia en edición de vídeo,
+            posproducción de audio y apoyo a la dirección creativa en proyectos
+            de diversa escala — desde videoclips y documentales hasta contenido
+            digital para plataformas.
+          </p>
+
+          <div class="about__stats">
+            <div class="stat" data-reveal="up" data-reveal-delay="1">
+              <span class="stat__num">3+</span>
+              <span class="stat__label">Años de experiencia</span>
+            </div>
+            <div class="stat" data-reveal="up" data-reveal-delay="2">
+              <span class="stat__num">8+</span>
+              <span class="stat__label">Proyectos completados</span>
+            </div>
+            <div class="stat" data-reveal="up" data-reveal-delay="3">
+              <span class="stat__num">2</span>
+              <span class="stat__label">Idiomas</span>
+            </div>
+          </div>
+
+          <div class="about__tools" data-reveal="up" data-reveal-delay="4">
+            <span class="tool-tag">Premiere Pro</span>
+            <span class="tool-tag">After Effects</span>
+            <span class="tool-tag">DaVinci Resolve</span>
+            <span class="tool-tag">Audition</span>
+            <span class="tool-tag">Motion Graphics</span>
+            <span class="tool-tag">3D</span>
+            <span class="tool-tag">Fotografía</span>
+            <span class="tool-tag">Dirección Creativa</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SKILLS ────────────────────────────────────────────── -->
+  <section class="skills" id="skills">
+    <div class="container">
+      <div data-reveal="up">
+        <p class="section-label">Habilidades técnicas</p>
+        <h2 class="section-title">Mi <span>arsenal</span> creativo</h2>
+      </div>
+
+      <div class="skills__grid">
+        <!-- Video -->
+        <div class="skill-card" data-reveal="up" data-reveal-delay="1">
+          <div class="skill-card__icon"><i class="fa-solid fa-video"></i></div>
+          <h3 class="skill-card__title">Edición de Video</h3>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>Adobe Premiere Pro</span><span>95%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-w="0.95"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>DaVinci Resolve</span><span>80%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-w="0.80"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>Montaje narrativo</span><span>90%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-w="0.90"></div></div>
+          </div>
+        </div>
+
+        <!-- Audio -->
+        <div class="skill-card" data-reveal="up" data-reveal-delay="2">
+          <div class="skill-card__icon"><i class="fa-solid fa-headphones"></i></div>
+          <h3 class="skill-card__title">Diseño Sonoro</h3>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>Adobe Audition</span><span>88%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-w="0.88"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>Edición de audio</span><span>85%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-w="0.85"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>Diseño de ambientes</span><span>80%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-w="0.80"></div></div>
+          </div>
+        </div>
+
+        <!-- Motion -->
+        <div class="skill-card" data-reveal="up" data-reveal-delay="3">
+          <div class="skill-card__icon"><i class="fa-solid fa-bolt"></i></div>
+          <h3 class="skill-card__title">Motion &amp; Dirección</h3>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>After Effects</span><span>85%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-w="0.85"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>Motion Graphics</span><span>82%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-w="0.82"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>Dirección creativa</span><span>88%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-w="0.88"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Languages -->
+      <div style="margin-top:3rem;" data-reveal="up" data-reveal-delay="4">
+        <p class="section-label">Idiomas</p>
+        <div class="lang-grid">
+          <div class="lang-badge native"><i class="fa-solid fa-circle" style="font-size:.5rem;margin-right:.4rem"></i> Español — Nativo</div>
+          <div class="lang-badge b2"><i class="fa-solid fa-circle" style="font-size:.5rem;margin-right:.4rem"></i> Inglés — Intermedio</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EXPERIENCE ─────────────────────────────────────────── -->
+  <section class="experience" id="experience">
+    <div class="container">
+      <div data-reveal="up">
+        <p class="section-label">Trayectoria profesional</p>
+        <h2 class="section-title">En el <span>campo</span></h2>
+      </div>
+
+      <div class="timeline">
+
+        <div class="timeline-item" data-reveal="right">
+          <div class="timeline-frame">
+            <p class="timeline-date"><i class="fa-solid fa-clapperboard" style="margin-right:.5rem"></i>Ago 2025 — Nov 2025</p>
+            <h3 class="timeline-role">Realizador Multimedia</h3>
+            <p class="timeline-company">Canal Dosis Informa</p>
+            <p class="timeline-desc">
+              Producción y edición de contenido audiovisual para plataformas digitales,
+              garantizando coherencia visual y narrativa. Participación activa en la
+              planificación, grabación y postproducción de piezas comunicativas de diverso formato.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-reveal="right" data-reveal-delay="1">
+          <div class="timeline-frame">
+            <p class="timeline-date"><i class="fa-solid fa-clapperboard" style="margin-right:.5rem"></i>Feb 2025 — Jun 2025</p>
+            <h3 class="timeline-role">Director de Videoclip</h3>
+            <p class="timeline-company">Dos Personas Rotas</p>
+            <p class="timeline-desc">
+              Desarrollo integral de la dirección creativa y narrativa del videoclip:
+              definición de estética, concepto visual y puesta en escena acorde al
+              estilo artístico del proyecto musical.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-reveal="right" data-reveal-delay="2">
+          <div class="timeline-frame">
+            <p class="timeline-date"><i class="fa-solid fa-clapperboard" style="margin-right:.5rem"></i>Mayo 2025 — Jun 2025</p>
+            <h3 class="timeline-role">Videolyrics Animado</h3>
+            <p class="timeline-company">Dos Personas Rotas</p>
+            <p class="timeline-desc">
+              Creación y animación integral de videolyrics: desarrollo de gráficos animados
+              y elementos visuales en 3D y motion graphics alineados con la narrativa de
+              la canción, en paralelo a la dirección creativa del videoclip para asegurar
+              coherencia estética y conceptual.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-reveal="right" data-reveal-delay="3">
+          <div class="timeline-frame">
+            <p class="timeline-date"><i class="fa-solid fa-clapperboard" style="margin-right:.5rem"></i>Ago 2024 — Nov 2024</p>
+            <h3 class="timeline-role">Montajista de Documental</h3>
+            <p class="timeline-company">Rugir con estilo</p>
+            <p class="timeline-desc">
+              Organización de entrevistas y material de archivo para construir
+              una narrativa cronológica clara y coherente. Edición completa del
+              montaje documental.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-reveal="right" data-reveal-delay="4">
+          <div class="timeline-frame">
+            <p class="timeline-date"><i class="fa-solid fa-camera" style="margin-right:.5rem"></i>Jul 2024</p>
+            <h3 class="timeline-role">Producción Fotográfica Promocional</h3>
+            <p class="timeline-company">Cortometraje independiente</p>
+            <p class="timeline-desc">
+              Producción y gestión integral de sesión fotográfica promocional:
+              coordinación de locación, presupuesto, modelo y recursos técnicos.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-reveal="right" data-reveal-delay="5">
+          <div class="timeline-frame">
+            <p class="timeline-date"><i class="fa-solid fa-headphones" style="margin-right:.5rem"></i>Ago 2023 — Nov 2023</p>
+            <h3 class="timeline-role">Director de Sonido</h3>
+            <p class="timeline-company">Cortometraje Silencio</p>
+            <p class="timeline-desc">
+              Diseño, grabación y supervisión de elementos sonoros. Aporte de
+              claridad y soporte narrativo a través de ambientes, diálogos y efectos
+              de audio.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-reveal="right">
+          <div class="timeline-frame">
+            <p class="timeline-date"><i class="fa-brands fa-youtube" style="margin-right:.5rem"></i>Mar 2020 — Nov 2021</p>
+            <h3 class="timeline-role">Editor de Video</h3>
+            <p class="timeline-company">Canal de YouTube</p>
+            <p class="timeline-desc">
+              Edición y postproducción de gameplays comentados: intros animadas,
+              rotoscopia y subtítulos dinámicos para optimizar el ritmo narrativo
+              y la experiencia del espectador.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EDUCATION ──────────────────────────────────────────── -->
+  <section class="education" id="education">
+    <div class="container">
+      <div data-reveal="up">
+        <p class="section-label">Formación académica</p>
+        <h2 class="section-title"><span>Aprendizaje</span> continuo</h2>
+      </div>
+
+      <div class="edu-card" data-reveal="up" data-reveal-delay="1">
+        <div class="edu-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div>
+          <h3 class="edu-degree">Comunicación Audiovisual y Digital</h3>
+          <p class="edu-school">Fundación Universitaria del Área Andina</p>
+          <p class="edu-date">
+            Ago 2022 — Presente
+            <span class="edu-status">En curso</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ────────────────────────────────────────────── -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div data-reveal="up" style="text-align:center">
+        <p class="section-label" style="justify-content:center">Hablemos</p>
+        <h2 class="section-title">¿Tienes un <span>proyecto</span>?</h2>
+      </div>
+
+      <div class="contact__inner">
+        <p class="contact__lead" data-reveal="up">
+          Siempre abierto a nuevas colaboraciones, proyectos creativos
+          o simplemente a conversar sobre cine y audiovisuales.
+        </p>
+
+        <div class="contact__grid" data-reveal="up" data-reveal-delay="1">
+          <a href="tel:3138016759" class="contact-item">
+            <i class="fa-solid fa-phone"></i>
+            <div>
+              <p class="contact-item__label">Teléfono</p>
+              <p class="contact-item__value">313 801 6759</p>
+            </div>
+          </a>
+          <a href="mailto:scarrillo2003@gmail.com" class="contact-item">
+            <i class="fa-solid fa-envelope"></i>
+            <div>
+              <p class="contact-item__label">Email</p>
+              <p class="contact-item__value">scarrillo2003@gmail.com</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="socials" data-reveal="up" data-reveal-delay="2">
+          <a href="https://www.linkedin.com/in/santiago-carrillo" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+          <a href="https://www.instagram.com/santiago.carrillo" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ────────────────────────────────────────────── -->
+  <footer>
+    <p>© 2025 <span>Santiago Carrillo</span> — Filmmaker &amp; Editor Audiovisual</p>
+  </footer>
+
+  <!-- ─── JAVASCRIPT ─────────────────────────────────────────── -->
+  <script>
+    // ── Typewriter ──────────────────────────────────────────
+    const phrases = [
+      'Editor de Video & Audio',
+      'Director Creativo',
+      'Motion Graphics',
+      'Diseñador Sonoro',
+      'Realizador Multimedia',
+    ];
+    let pi = 0, ci = 0, deleting = false;
+    const typeEl = document.getElementById('typewriter');
+    function type() {
+      const phrase = phrases[pi];
+      const display = deleting ? phrase.slice(0, ci--) : phrase.slice(0, ci++);
+      typeEl.innerHTML = display + '<span class="cursor"></span>';
+      if (!deleting && ci > phrase.length) { deleting = true; setTimeout(type, 1800); return; }
+      if (deleting && ci < 0) { deleting = false; pi = (pi + 1) % phrases.length; setTimeout(type, 400); return; }
+      setTimeout(type, deleting ? 55 : 90);
+    }
+    setTimeout(type, 800);
+
+    // ── Waveform bars ────────────────────────────────────────
+    const wf = document.getElementById('waveform');
+    const counts = 28;
+    for (let i = 0; i < counts; i++) {
+      const b = document.createElement('div');
+      b.className = 'wave-bar';
+      const h = Math.random() * 28 + 4;
+      b.style.height = h + 'px';
+      b.style.animationDelay = (i * 0.07) + 's';
+      b.style.animationDuration = (0.9 + Math.random() * 0.8) + 's';
+      wf.appendChild(b);
+    }
+
+    // ── Nav scroll ───────────────────────────────────────────
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+      // progress bar
+      const h = document.documentElement;
+      const pct = (window.scrollY / (h.scrollHeight - h.clientHeight)) * 100;
+      document.getElementById('progress').style.width = pct + '%';
+    });
+
+    // ── Hamburger ────────────────────────────────────────────
+    const ham = document.getElementById('hamburger');
+    const mob = document.getElementById('mobileNav');
+    ham.addEventListener('click', () => {
+      ham.classList.toggle('open');
+      mob.classList.toggle('open');
+    });
+    function closeMobile() {
+      ham.classList.remove('open');
+      mob.classList.remove('open');
+    }
+
+    // ── Scroll reveal ─────────────────────────────────────────
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+    // ── Skill bar fill on scroll ──────────────────────────────
+    const skillObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.skill-fill').forEach(fill => {
+            const w = fill.getAttribute('data-w') || '1';
+            fill.style.transform = `scaleX(${w})`;
+          });
+          skillObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.skill-card').forEach(card => skillObserver.observe(card));
+
+    // Fix: pre-set transition target from data-w attribute
+    document.querySelectorAll('.skill-fill').forEach(fill => {
+      const w = fill.getAttribute('data-w') || '1';
+      fill.style.setProperty('--target-w', w);
+    });
+  </script>
+</body>
+</html>
