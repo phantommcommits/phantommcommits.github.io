@@ -706,6 +706,22 @@
     }
     footer span { color: var(--accent); }
 
+    /* ─── BTN DOWNLOAD PDF ────────────────────────────────── */
+    .btn-download-pdf {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .45rem 1.1rem;
+      font-size: .7rem; letter-spacing: .12em; text-transform: uppercase;
+      font-family: var(--font-mono);
+      background: transparent; color: var(--accent);
+      border: 1px solid var(--accent);
+      cursor: pointer;
+      transition: background .2s, color .2s, transform .2s;
+    }
+    .btn-download-pdf:hover {
+      background: var(--accent); color: #fff;
+      transform: translateY(-1px);
+    }
+
     /* ─── RESPONSIVE ───────────────────────────────────────── */
     @media (max-width: 900px) {
       .about__grid { grid-template-columns: 1fr; gap: 3rem; }
@@ -716,12 +732,80 @@
     @media (max-width: 700px) {
       .nav__links { display: none; }
       .nav__hamburger { display: flex; }
+      .btn-download-pdf { display: none; }
       .about__stats { grid-template-columns: repeat(3,1fr); gap: .8rem; }
       .edu-card { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
       .about__stats { grid-template-columns: 1fr; }
       section { padding: 4rem 5vw; }
+    }
+
+    /* ─── PRINT / PDF ──────────────────────────────────────── */
+    @media print {
+      :root {
+        --bg:      #ffffff;
+        --surface: #f4f4f4;
+        --surface2:#ebebeb;
+        --border:  #cccccc;
+        --accent:  #c0392b;
+        --accent2: #d68910;
+        --text:    #111111;
+        --muted:   #555555;
+      }
+      /* Ocultar decoraciones */
+      .grain, .progress-line, .nav, #mobileNav,
+      .hero__sprockets, .hero__scroll, .hero__bg,
+      #waveform, .btn-download-pdf,
+      .hero__name .glitch::before,
+      .hero__name .glitch::after { display: none !important; }
+
+      /* Sin animaciones */
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      /* Revelar todo (scroll animations) */
+      [data-reveal] { opacity: 1 !important; transform: none !important; }
+
+      /* Barras de habilidad visibles */
+      .skill-fill { transform: scaleX(var(--target-w, 1)) !important; }
+
+      body {
+        background: #fff;
+        color: #111;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      /* Hero compacto */
+      .hero {
+        min-height: auto;
+        padding: 2rem 5vw 1.5rem;
+        page-break-after: avoid;
+      }
+      .hero__name { font-size: 3.5rem; }
+      .hero__cta  { display: none; }
+
+      /* Secciones */
+      section { padding: 1.5rem 5vw; }
+
+      /* Colores de texto */
+      .section-title, .timeline-role, .edu-degree,
+      .skill-card__title { color: #111 !important; }
+      .about__bio, .timeline-desc { color: #333 !important; }
+
+      /* Fondo de cards */
+      .skill-card, .timeline-frame, .edu-card { background: #f9f9f9 !important; }
+      .skills { background: #f4f4f4 !important; }
+      .education { background: #f4f4f4 !important; }
+
+      /* Evitar cortes de página en el medio de items */
+      .timeline-item, .skill-card, .edu-card { page-break-inside: avoid; }
+
+      /* Scrollbar no se imprime */
+      ::-webkit-scrollbar { display: none; }
     }
 
     /* ─── ANIMATED WAVEFORM DECORATION ────────────────────── */
@@ -771,6 +855,9 @@
       <li><a href="#education">Educación</a></li>
       <li><a href="#contact">Contacto</a></li>
     </ul>
+    <button class="btn-download-pdf" onclick="downloadPDF()" aria-label="Descargar CV en PDF">
+      <i class="fa-solid fa-file-arrow-down"></i> Descargar CV
+    </button>
     <button class="nav__hamburger" id="hamburger" aria-label="Menú">
       <span></span><span></span><span></span>
     </button>
@@ -1236,6 +1323,16 @@
       const w = fill.getAttribute('data-w') || '1';
       fill.style.setProperty('--target-w', w);
     });
+
+    // ── Descargar PDF ─────────────────────────────────────────
+    function downloadPDF() {
+      // Forzar barras de habilidad visibles antes de imprimir
+      document.querySelectorAll('.skill-fill').forEach(fill => {
+        const w = fill.getAttribute('data-w') || '1';
+        fill.style.transform = `scaleX(${w})`;
+      });
+      window.print();
+    }
   </script>
 </body>
 </html>
